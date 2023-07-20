@@ -4,7 +4,6 @@ class Item:
     
     pay_rate = 0.8
 
-    #Fazendo uma lista com todas as instâncias
     all = []
 
     def __init__(self, name: str, price: float, quantity: int):
@@ -25,10 +24,6 @@ class Item:
     def apply_discount(self):
         self.price = self.price * self.pay_rate
     
-    #Usando class method (métodos que são aplicados na classe e não nas instancias)
-    #Para fazer isso o @classmethod deve ser adicionado antes do método
-
-    #Faremos uma função para adicionar instancias a partir de um csv
     @classmethod
     def instantiate_from_csv(cls, path: str):
         with open(path, 'r') as f:
@@ -36,9 +31,6 @@ class Item:
             items = list(reader)
         for item in items:
             Item( name = item.get('name'), price = float(item.get('price')), quantity = int(item.get('quantity')))
-
-    #Outro caso é a static method que diferente dos outros métodos não recebe a instância nem a classe como parâmetro
-    #Pode ser chamado no nivel da classe ou da instancia pois não usa nenhum dos dois
 
     @staticmethod
     def is_integer(num):
@@ -50,9 +42,34 @@ class Item:
             return False
 
     def __repr__(self):
-        return f"Item({self.name}, {self.price}, {self.quantity})"
+        return f"{self.__class__.__name__}({self.name}, {self.price}, {self.quantity})"
+
+#Inheritance: criamos agora uma classe filha da classe item
+#A classe compartilha os atributos básicos da classe mãe mas pode ter suas próprias especificidades
+
+class Phone(Item):
+    
+    all = []
+
+    def __init__(self, name: str, price: float, quantity: int, broken_phones: int):
+        
+        #Chamar o pai da classe phone (classe item) usando o super, assim aprofeitamos as propriedades do init da classe mãe
+
+        super().__init__(name, price, quantity)
+
+        assert broken_phones >= 0, "The quantity of broken phones must be greater or equal to zero"
+        self.broken_phones = broken_phones
+
+    #Fazendo nossa representação de instancia da classe filha phone
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.name}, {self.price}, {self.quantity}, {self.broken_phones})"
+
+phone1 = Phone('Iphone12', 3000, 20, 10)
+phone2 = Phone('Iphone13', 4000, 30, 10)
 
 Item.instantiate_from_csv('itens.csv')
-print(Item.all)
 
-print(Item.is_integer(14.0))
+#Perceba que a função funciona perfeitamente
+print(phone1.calculate_total_price())
+
+print(Item.all)
