@@ -28,13 +28,13 @@ class Student:
             gender = rd.choice(['M', 'F'])
 
             if gender == 'M':
-                boy_names = pd.read_csv('boy_names.csv')
-                last_name = pd.read_csv('last_names.csv')
+                boy_names = pd.read_csv('boy_names.csv', encoding='latin1')
+                last_name = pd.read_csv('last_names.csv', encoding='latin1')
                 
                 name = str(rd.choice(boy_names['names']) + ' ' + rd.choice(last_name['last_names']))
             else:
-                girl_names = pd.read_csv('girl_names.csv')
-                last_name = pd.read_csv('last_names.csv')
+                girl_names = pd.read_csv('girl_names.csv', encoding='latin1')
+                last_name = pd.read_csv('last_names.csv', encoding='latin1')
 
                 name = str(rd.choice(girl_names['names']) + ' ' + rd.choice(last_name['last_names']))
             
@@ -88,4 +88,4 @@ class Student:
 Student.generate_random_students(10)
 
 for instance in Student.all:
-    print(instance.Ptg_grades)
+    print(instance.Std_name)
