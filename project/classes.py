@@ -85,7 +85,7 @@ class Student:
 
         Student.all.append(self)
 
-Student.generate_random_students(10)
+Student.generate_random_students(1000)
 
 for instance in Student.all:
     print(instance.Std_name)
